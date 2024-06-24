@@ -7,6 +7,6 @@ import io.temporal.activity.ActivityMethod;
 public interface Activity2 {
 
     @ActivityMethod
-    void execute(ConfirmRequest confirmRequest);
+    ConfirmResponse execute(ConfirmRequest confirmRequest);
 
 }

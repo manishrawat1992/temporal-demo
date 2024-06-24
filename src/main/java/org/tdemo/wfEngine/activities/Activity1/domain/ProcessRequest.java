@@ -6,4 +6,5 @@ import lombok.Data;
 public class ProcessRequest {
     private String dummyId;
 
+    private int id;
 }

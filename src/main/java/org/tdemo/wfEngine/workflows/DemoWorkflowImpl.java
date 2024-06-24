@@ -1,14 +1,19 @@
 package org.tdemo.wfEngine.workflows;
 
 import io.temporal.activity.ActivityOptions;
+import io.temporal.workflow.Async;
+import io.temporal.workflow.Promise;
 import io.temporal.workflow.Workflow;
+import org.apache.commons.compress.utils.Lists;
 import org.tdemo.wfEngine.activities.Activity1.Activity1;
 import org.tdemo.wfEngine.activities.Activity1.domain.ProcessRequest;
 import org.tdemo.wfEngine.activities.Activity1.domain.ProcessingOutput;
 import org.tdemo.wfEngine.activities.Activity2.Activity2;
 import org.tdemo.wfEngine.activities.Activity2.ConfirmRequest;
+import org.tdemo.wfEngine.activities.Activity2.ConfirmResponse;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class DemoWorkflowImpl implements DemoWorkflow {
@@ -39,8 +44,21 @@ public class DemoWorkflowImpl implements DemoWorkflow {
 
         currentStage = "started";
 
-        ProcessRequest processRequest = new ProcessRequest();
-        ProcessingOutput out = activity1.startVerification(processRequest);
+        List<Promise<ProcessingOutput>> output = Lists.newArrayList();
+
+        for(int i =0 ; i < 10; i++) {
+            ProcessRequest processRequest = new ProcessRequest();
+            processRequest.setId(i);
+            Promise<ProcessingOutput> future = Async.function(activity1::startVerification, processRequest);
+
+            output.add(future);
+        }
+
+        List<ProcessingOutput> outputs = Lists.newArrayList();
+
+        for(Promise<ProcessingOutput> future: output) {
+            outputs.add(future.get());
+        }
 
         currentStage = "verifyAckPending";
 
@@ -49,9 +67,10 @@ public class DemoWorkflowImpl implements DemoWorkflow {
         currentStage = "verified";
 
         ConfirmRequest confirmRequest = new ConfirmRequest();
-        activity2.execute(confirmRequest);
+        confirmRequest.setOutputs(outputs);
+        ConfirmResponse resp1 = activity2.execute(confirmRequest);
 
-        currentStage = "completed";
+        currentStage = "completed :" + resp1.getResult();
     }
 
     @Override
