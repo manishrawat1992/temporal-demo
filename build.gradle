@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.testng:testng:7.7.0'
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    // https://mvnrepository.com/artifact/io.dropwizard/dropwizard-core
+    implementation group: 'io.dropwizard', name: 'dropwizard-core', version: '4.0.1'
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    implementation group: 'com.google.inject', name: 'guice', version: '7.0.0'
+    implementation group: 'ru.vyarus', name: 'dropwizard-guicey', version: '7.0.1'
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '32.1.1-jre'
+
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
+    implementation 'io.temporal:temporal-sdk:1.18.2'
+
+    // https://mvnrepository.com/artifact/dev.morphia.morphia/morphia-core
+    implementation 'dev.morphia.morphia:morphia-core:2.3.5'
+    implementation 'software.amazon.awssdk:s3:2.17.4'
+}
+
+test {
+    useTestNG()
+}
