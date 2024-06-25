@@ -6,6 +6,7 @@ import io.temporal.worker.Worker;
 import io.temporal.worker.WorkerFactory;
 import org.tdemo.wfEngine.activities.Activity1.Activity1Impl;
 import org.tdemo.wfEngine.activities.Activity2.Activity2Impl;
+import org.tdemo.wfEngine.wfs.DemoChildWorkflowImpl;
 import org.tdemo.wfEngine.workflows.DemoWorkflow;
 import org.tdemo.wfEngine.workflows.DemoWorkflowImpl;
 
@@ -27,6 +28,7 @@ public class DemoWorker {
 
         // Workflows are stateful so a type is needed to create instances.
         worker.registerWorkflowImplementationTypes(DemoWorkflowImpl.class);
+        worker.registerWorkflowImplementationTypes(DemoChildWorkflowImpl.class);
 
         // Activities are stateless and thread safe so a shared instance is used.
         worker.registerActivitiesImplementations(new Activity1Impl());

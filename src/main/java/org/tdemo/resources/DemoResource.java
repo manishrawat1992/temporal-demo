@@ -1,7 +1,6 @@
 package org.tdemo.resources;
 
 import com.google.inject.Inject;
-import jakarta.annotation.Resource;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;

@@ -11,7 +11,7 @@ public class Activity1Impl implements Activity1{
     public ProcessingOutput startVerification(ProcessRequest request) {
 
         try {
-            Thread.sleep(5000 + new Random(System.currentTimeMillis()).nextInt(5000) );
+            Thread.sleep(3000 + new Random(System.currentTimeMillis()).nextInt(3000) );
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
